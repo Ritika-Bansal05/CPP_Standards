@@ -1,0 +1,34 @@
+# LC Questions : 
+  1. Largest Subarray with sum k 
+  2. Count subarrays with given XOR k
+
+Approach : start with pref and use map. If map has already pref operation k in mpp then update ans . Otherwise add pref in map.
+(if pref is x and x operation k is already present in map then pref - mpp[x operation k] == target )
+
+class Solution{
+public:
+    int longestSubarray(vector<int> &nums, int k){
+        unordered_map<int,int>mpp;
+
+        int n = nums.size();
+
+        int sum = 0;
+
+        mpp[0] = -1;
+        int ans = 0;
+
+        for(int i=0;i<n;i++){
+            sum += nums[i];
+            int temp = sum-k;
+            if(mpp.find(temp) != mpp.end()){
+                ans = max(ans,i-mpp[temp]);
+            }
+            if (mpp.find(sum) == mpp.end()) {
+                mpp[sum] = i;
+            }
+
+        }
+        return ans;
+    }
+};
+
